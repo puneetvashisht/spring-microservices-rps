@@ -26,7 +26,7 @@ public class EmployeeController {
 		return employees;
 	}
 	
-	@RequestMapping(path = "/employees", method = RequestMethod.POST)
+	@RequestMapping(path = "/employees", method = RequestMethod.POST , produces = {"application/json" , "application/xml"})
 	@ResponseStatus(code = HttpStatus.CREATED)
 	public void addEmployee(@RequestBody Employee employee) {
 		employees.add(employee);
@@ -60,6 +60,11 @@ public class EmployeeController {
 				break;
 			}
 		}
+
+		if(emp == null) {
+			throw new EmployeeNotFoundException("Employee not found");
+		}
+
 		return emp;
 	}
 

@@ -1,5 +1,9 @@
 package com.rps.springbootdemo;
 
+import javax.xml.bind.annotation.XmlRootElement;
+
+
+@XmlRootElement
 public class Employee {
 	
 	int id;
