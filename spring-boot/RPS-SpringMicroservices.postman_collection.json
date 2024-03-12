@@ -73,6 +73,109 @@
 					"response": []
 				},
 				{
+					"name": "Fetch All Workouts By Category",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\": \"Swimming\",\n    \"description\": \"Good for health\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/v1/workouts",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"workouts"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Fetch All Workouts By Title",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\": \"Swimming\",\n    \"description\": \"Good for health\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/v1/workouts/title/Chest",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"workouts",
+								"title",
+								"Chest"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Fetch All Workouts By Title Copy",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\": \"Swimming\",\n    \"description\": \"Good for health\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/v1/workouts/title/Chest",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"workouts",
+								"title",
+								"Chest"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "Fetch A Workout",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
