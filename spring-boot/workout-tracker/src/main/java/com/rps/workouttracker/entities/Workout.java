@@ -1,10 +1,11 @@
 package com.rps.workouttracker.entities;
 
-import jakarta.annotation.Generated;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
 
 // create workout entity with id, title, description
 @Entity
@@ -14,6 +15,12 @@ public class Workout {
     private int id;
     private String title;
     private String description;
+    private int cbpm;
+
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.REFRESH})
+    private Category category;
+
+    
 
     public Workout() {
     }
@@ -46,6 +53,22 @@ public class Workout {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public int getCbpm() {
+        return cbpm;
+    }
+
+    public void setCbpm(int cbpm) {
+        this.cbpm = cbpm;
+    }
+
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
     }
 }
 
