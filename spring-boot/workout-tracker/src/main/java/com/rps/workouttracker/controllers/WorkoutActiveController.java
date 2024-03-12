@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.rps.workouttracker.entities.WorkoutActive;
+import com.rps.workouttracker.exceptions.ResourceNotFoundException;
 import com.rps.workouttracker.repositories.WorkoutActiveRepository;
 
 @RestController
@@ -39,13 +42,24 @@ public class WorkoutActiveController {
     }
 
     @PatchMapping("/workoutactive/{id}")
-    public void endWorkoutActive( @PathVariable("id") int id) {
+    public ResponseEntity<Void> endWorkoutActive( @PathVariable("id") int id) {
         //update a workout active
         Optional<WorkoutActive> workoutActiveFound = workoutActiveRepository.findById(id);
-        workoutActiveFound.ifPresent(workoutActive -> {
+
+        if(workoutActiveFound.isPresent()){
+            WorkoutActive workoutActive = workoutActiveFound.get();
             workoutActive.setEndTime(LocalTime.now());
             workoutActiveRepository.save(workoutActive);
-        });
+            return new ResponseEntity<>(HttpStatus.OK);
+            
+        }
+
+        else {
+            throw new ResourceNotFoundException("Workout Active not found: " + id);
+        }
+
+
+        
     }
     //patch method to update a workout active
 }

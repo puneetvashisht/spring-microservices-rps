@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import com.rps.workouttracker.entities.Category;
 import com.rps.workouttracker.entities.Workout;
+import com.rps.workouttracker.exceptions.ResourceNotFoundException;
 import com.rps.workouttracker.repositories.CategoryRepository;
 import com.rps.workouttracker.repositories.WorkoutRepository;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -29,7 +30,15 @@ public class WorkoutController {
 
     @GetMapping("/workouts/{id}")
     public Workout getWorkout(@PathVariable int id) {
-        return workoutRepository.findById(id).orElse(null);
+        // return workout by id or throw exception if not found
+        Optional<Workout> workoutFound =  workoutRepository.findById(id);
+        if(workoutFound.isEmpty()){
+            throw new ResourceNotFoundException("Workout not found");
+        }
+        else{
+            return workoutFound.get();
+        }
+        // return workoutRepository.findById(id).orElseThrow(()->new RuntimeException("Workout not found"));
     }
 
     @PostMapping("/workouts")
