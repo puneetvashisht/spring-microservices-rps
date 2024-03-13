@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -29,6 +30,11 @@ public class WorkoutController {
 
     @Autowired
     CategoryRepository categoryRepository;
+    
+    @Value("${server.port}")
+    String port;
+    
+    
 
     @GetMapping("/workouts")
     public List<Workout> getWorkouts() {
@@ -80,7 +86,9 @@ public class WorkoutController {
             throw new ResourceNotFoundException("Workout not found");
         }
         else{
-            return workoutFound.get();
+            Workout workout = workoutFound.get();
+            workout.setPort(port);
+            return workout;
         }
         // return workoutRepository.findById(id).orElseThrow(()->new RuntimeException("Workout not found"));
     }

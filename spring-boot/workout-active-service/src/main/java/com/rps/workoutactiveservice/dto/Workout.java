@@ -6,12 +6,20 @@ public class Workout {
     private String title;
     private String description;
     private int cbpm;
-
+    private String port;
     private Category category;
 
     
 
-    public Workout() {
+    public String getPort() {
+		return port;
+	}
+
+	public void setPort(String port) {
+		this.port = port;
+	}
+
+	public Workout() {
     }
 
     public Workout(int id, String title, String description) {
