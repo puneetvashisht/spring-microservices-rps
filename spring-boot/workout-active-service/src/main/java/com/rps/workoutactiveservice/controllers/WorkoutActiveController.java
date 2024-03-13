@@ -27,6 +27,10 @@ public class WorkoutActiveController {
     
     @Autowired
     private WorkoutActiveRepository workoutActiveRepository;
+    
+    
+    @Autowired
+    WorkoutServiceProxy workoutServiceProxy;
     //create workout active controller with post and patch methods
     //post method to create a new workout active
     @PostMapping("/workoutactive")
@@ -41,6 +45,32 @@ public class WorkoutActiveController {
     public List<WorkoutActive> getWorkoutActive() {
         //get all workout actives
         return workoutActiveRepository.findAll();
+    }
+    
+    @GetMapping("/workoutactive/feign/{id}")
+    public WorkoutActive getAnWorkoutActiveFeign(@PathVariable int id) {
+      
+            Optional<WorkoutActive> workoutActiveFound =  workoutActiveRepository.findById(id);
+            if(workoutActiveFound.isPresent()) {
+            	
+            	
+            	
+            	WorkoutActive workoutActive =  workoutActiveFound.get();
+            	
+            	int workoutId = workoutActive.getWorkoutId();
+            	
+            	Workout workout = workoutServiceProxy.fetchWorkout(workoutId);
+            	
+            	workoutActive.setWorkout(workout);
+            	
+            	return workoutActive;
+            	
+            }
+            else {
+            	throw new ResourceNotFoundException("Active Workout with not found with id: " + id);
+            }
+            
+        
     }
     
     @GetMapping("/workoutactive/{id}")
