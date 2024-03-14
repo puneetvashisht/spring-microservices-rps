@@ -21,6 +21,7 @@ import com.rps.workoutactiveservice.dto.Workout;
 import com.rps.workoutactiveservice.entities.WorkoutActive;
 import com.rps.workoutactiveservice.exceptions.ResourceNotFoundException;
 import com.rps.workoutactiveservice.repositories.WorkoutActiveRepository;
+import com.rps.workoutactiveservice.services.WorkoutActiveService;
 
 @RestController
 @RequestMapping("/api/v1")
@@ -47,7 +48,7 @@ public class WorkoutActiveController {
 
 
 	@Autowired
-    WorkoutServiceProxy workoutServiceProxy;
+    WorkoutActiveService workoutActiveService;
     //create workout active controller with post and patch methods
     //post method to create a new workout active
     @PostMapping("/workoutactive")
@@ -70,7 +71,7 @@ public class WorkoutActiveController {
     }
     
     @GetMapping("/workoutactive/feign/{id}")
-    public WorkoutActive getAnWorkoutActiveFeign(@PathVariable int id) {
+    public WorkoutActive getAnWorkoutActiveFeign(@PathVariable int id) throws Exception {
       
             Optional<WorkoutActive> workoutActiveFound =  workoutActiveRepository.findById(id);
             if(workoutActiveFound.isPresent()) {
@@ -81,7 +82,7 @@ public class WorkoutActiveController {
             	
             	int workoutId = workoutActive.getWorkoutId();
             	
-            	Workout workout = workoutServiceProxy.fetchWorkout(workoutId);
+            	Workout workout = workoutActiveService.fetchWorkout(workoutId);
             	
             	workoutActive.setWorkout(workout);
             	
