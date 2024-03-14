@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -29,7 +30,23 @@ public class WorkoutActiveController {
     private WorkoutActiveRepository workoutActiveRepository;
     
     
-    @Autowired
+    @Value("${app.categories}")
+    List<String> categories;
+    
+    
+    
+    
+    public List<String> getCategories() {
+		return categories;
+	}
+
+	public void setCategories(List<String> categories) {
+		this.categories = categories;
+	}
+
+
+
+	@Autowired
     WorkoutServiceProxy workoutServiceProxy;
     //create workout active controller with post and patch methods
     //post method to create a new workout active
@@ -39,6 +56,11 @@ public class WorkoutActiveController {
         workoutActive.setStartTime(LocalTime.now());
         workoutActiveRepository.save(workoutActive);
 
+    }
+    
+    @GetMapping("/categories")
+    public List<String> getCategoriesConfig(){
+    	return this.categories;
     }
 
     @GetMapping("/workoutactive")
